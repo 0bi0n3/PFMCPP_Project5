@@ -473,9 +473,7 @@ void MidiKeyboard::ledLightDemoMode(std::string onOff)
 double MidiKeyboard::adjustPitch(MidiKeyboard pitchChange)
 {    
     double adjustedPitch = pitchControlRange + pitchChange.pitchControlRange;
-
     std::cout << "Pitch adjusting!\n";
-
     return adjustedPitch;
 }
 
@@ -495,11 +493,94 @@ float MidiKeyboard::padHitAmount(MidiKeyboard padNumber)
  new UDT 4:
  with 2 member functions
  */
+struct Kingdom
+{
+    Kingdom();
+    ~Kingdom();
+
+    Castle myCastle;
+    Castle::FarmlandRevenue farmlands;
+
+    void defendCastle();
+    void manageFarmlands();
+};
+
+void Kingdom::defendCastle()
+{
+    std::cout << "Orders to defend have been issued...\n";
+    myCastle.announceOrders("Defend the castle!");
+    myCastle.openCastleGates(0);  
+    std::cout << "Castle gates now being closed...\n";
+}
+
+void Kingdom::manageFarmlands()
+{
+    std::cout << "Farmland management under way.\n";
+    farmlands.displayCurrentTurnover(50, 25, 15.67f, 10.9f);
+    int displayFarmlandSize = farmlands.arces;
+    std::cout << "Current farmland area: "<< displayFarmlandSize << "\n";
+}
+
+Kingdom::Kingdom()
+{
+    // constructor
+    std::cout << "The Kingdom is being constructed!\n";
+}
+
+Kingdom::~Kingdom()
+{
+    // decstructor
+    std::cout << "The kingdom has fallen! Close the gates!\n";
+    defendCastle();
+}
 
 /*
  new UDT 5:
  with 2 member functions
  */
+struct MusicStore
+{
+    MusicStore();
+    ~MusicStore();
+    MidiKeyboard keyboards;
+    RolandTB303::SavePattern bassSynths;
+
+    void listKeyboardStock();
+    void turnOnBassSynthDisplays();
+};
+
+MusicStore::MusicStore()
+{
+    // constructor
+    std::cout << "Music store is open! Now listing keyboard inventory...\n";
+    listKeyboardStock();
+}
+
+MusicStore::~MusicStore()
+{
+    // destructor
+    std::cout << "The music store is now closing.\n";
+}
+
+void MusicStore::listKeyboardStock()
+{
+    std::cout << "Obtaining current keyboard stock level...\n";
+    int totalKeyboardKeys = keyboards.numberOfKeys;
+    if(totalKeyboardKeys > 200)
+    {
+        std::cout << "There are more than eight 25-key MIDI keyboards in stock!\n";
+    }
+    else
+    {
+        std::cout << "Less than eight 25-key MIDI keyboards in stock, list as stock running low\n";
+    }
+}
+
+void MusicStore::turnOnBassSynthDisplays()
+{
+    std::cout << "Loading previous demo patterns...\n";
+    bassSynths.recallPattern('B');
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -517,5 +598,112 @@ float MidiKeyboard::padHitAmount(MidiKeyboard padNumber)
 
 int main()
 {
+    
+    //------------------------------------------------------------------------------------------------------------------
+    
+    Castle castle;
+    //1
+    castle.announceOrders("Release the hounds!");
+    std::cout << "names of royalty: " << castle.nameOfKing << " & " << castle.nameOfQueen << "\n";
+
+    //2
+    castle.openCastleGates(4);
+    std::cout << "total gates at castle: " << castle.numberOfGates << "\n";
+
+    //3
+    castle.reportCollectTaxes(10.f, Castle::FarmlandRevenue());
+    std::cout << "tax collected: " << castle.amountOfTaxesCollected << "\n";
+
+    //4
+    castle.fireSignalArrow(20, 8); // enter how many arrows first, then hit threshold requirement value
+        
+    //------------------------------------------------------------------------------------------------------------------
+    Castle::FarmlandRevenue farmlandrev;
+
+    //1
+    farmlandrev.displayCurrentTurnover(30, 66, 12.f, 8.f);
+    std::cout << "Current wholesale price of wheat per kg: " << farmlandrev.wheatSalePricePerKG << "\n";
+    //2
+    farmlandrev.floodFarmlands(150, 23.f, true);
+    std::cout << "Is the farmland in drought? 0 = no, 1 = yes: " << farmlandrev.isInDrought << "\n";
+    //3
+    farmlandrev.sellWheat(500, 21.f, 180.f);
+    std::cout << "Current number of able workers: " << farmlandrev.numberOfWorkers << "\n";
+
+    //4
+    farmlandrev.hireNewWorkers(10, 3000); // enter number of workers and income threshold
+
+    //------------------------------------------------------------------------------------------------------------------
+    
+    MidiKeyboard midikeyboard;
+
+    //1
+    midikeyboard.adjustPitch(MidiKeyboard());
+    std::cout << "List number of keys: " << midikeyboard.numberOfKeys << "\n";
+    //2
+    midikeyboard.isKeyPressed();
+    std::cout << "Available pitch control range: " << midikeyboard.pitchControlRange << "\n";
+    //3
+    midikeyboard.padHitAmount(MidiKeyboard());
+    std::cout << "Programmable pads: " << midikeyboard.numberOfMPCPads << "\n";
+
+    //4
+    midikeyboard.ledLightDemoMode("on"); // enter "on" for demo
+    
+    //------------------------------------------------------------------------------------------------------------------
+    
+    RolandTB303 rolandtb303;
+
+    //1
+    rolandtb303.filterSignal(3500.f);
+    std::cout << "Volume level: " << rolandtb303.volumeKnob << "\n";
+
+    //2
+    rolandtb303.programSequence(RolandTB303());
+    
+    //3
+    rolandtb303.tempoAdjust(RolandTB303());
+
+    //4
+    rolandtb303.syncMidi(15); // enter number of midi notes
+    
+    //------------------------------------------------------------------------------------------------------------------
+    
+    RolandTB303::SavePattern savepattern;
+
+    //1
+    savepattern.displaySavingProgress(35, 50.f);
+
+    //2
+    savepattern.savingSequence(4, 8, 2, 120);
+    
+    //3
+    savepattern.savingToExternal(8, "TB303.p");
+
+    //4
+    savepattern.recallPattern('C'); // enter 'A', 'B', 'C' to recall partern
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    Kingdom kingdom;
+
+    //1
+    kingdom.manageFarmlands();
+
+    //2
+    kingdom.defendCastle();
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    MusicStore musicStore;
+
+    //1 
+    musicStore.turnOnBassSynthDisplays();
+
+    //2
+    musicStore.listKeyboardStock();
+
+    //------------------------------------------------------------------------------------------------------------------
+
     std::cout << "good to go!" << std::endl;
 }
