@@ -70,7 +70,7 @@ write 3 UDTs below that EACH have:
  You will use those in Part 3 of this project.
 
  */
-
+#include <iostream>
 /*
  copied UDT 1:
  */
@@ -515,7 +515,6 @@ float MidiKeyboard::padHitAmount(MidiKeyboard padNumber)
  Wait for my code review.
  */
 
-#include <iostream>
 int main()
 {
     std::cout << "good to go!" << std::endl;
