@@ -106,8 +106,10 @@ struct Castle
         void floodFarmlands(int areaToFlood, float amountOfFlooding, bool isIndrought);
         void hireNewWorkers(int startWorkers, int revenueThreshold);
 
-        // New member function
-        
+        // New member functions
+        void printCurrentTurnover();
+        void printDroughtStatus();
+        void listTotalNumWorkers();
     };
 
     float reportCollectTaxes(float collectTaxes, FarmlandRevenue farmlandIncome);
@@ -119,51 +121,63 @@ struct Castle
     void displayNameOfKingAndQueen();
     void printTotalNumGates();
     void printTaxCollection();
-    
 };
 
 Castle::Castle() : numberOfGates(8), nameOfKing("Edward"), nameOfQueen("Magda"), amountOfTaxesCollected(300.f), isAtWar(true)
 {
-    // Castle class constructor
     std::cout << "Castle being constructed!\n";  
 }
 
 Castle::~Castle()
 {
-    // Castle class deconstructor
     std::cout << "Castle being deconstructed\n";
 }
 
 Castle::FarmlandRevenue::FarmlandRevenue()
 {
-    // FarmlandRevenue constructor
     std::cout << "FarmlandRevenue being constructed!\n";
 }
 
 Castle::FarmlandRevenue::~FarmlandRevenue()
 {
-    // FarmlandRevenue deconstructor
     std::cout << "FarmlandRevenue being deconstructed!\n";
 }
 
-// New member function definition
+// New member function
 void Castle::displayNameOfKingAndQueen()
 {
     std::cout << "names of royalty: " << this->nameOfKing << " & " << this->nameOfQueen << std::endl;
 }
 
-// New member function definition
+// New member function
 void Castle::printTotalNumGates()
 {
     std::cout << "total gates at castle: " << this->numberOfGates << std::endl;
 }
 
-// New member function definition
+// New member function
 void Castle::printTaxCollection()
 {
     std::cout << "tax collected: " << this->amountOfTaxesCollected << std::endl;
 }
 
+// New member function
+void Castle::FarmlandRevenue::printCurrentTurnover()
+{
+    std::cout << "Current wholesale price of wheat per kg: " << this->wheatSalePricePerKG << std::endl;
+}
+
+// New member function
+void Castle::FarmlandRevenue::printDroughtStatus()
+{
+    std::cout << "Is the farmland in drought? 0 = no, 1 = yes: " << this->isInDrought << std::endl;
+}
+
+// New member function
+void Castle::FarmlandRevenue::listTotalNumWorkers()
+{
+    std::cout << "Current number of able workers: " << this->numberOfWorkers << std::endl;
+}
 
 void Castle::FarmlandRevenue::hireNewWorkers(int startWorkers, int revenueThreshold)
 {
@@ -317,30 +331,35 @@ struct RolandTB303
     void filterSignal(float cutoffFrequency);
     float tempoAdjust(RolandTB303 tempo);
     int syncMidi(int midiNotesIn);
+
+    // New member function
+    void displayVolume();
 };
 
 RolandTB303::RolandTB303()
 {
-    // RolandTB303 constructor
     std::cout << "RolandTB303 being constructed!\n";  
 }
 
 RolandTB303::~RolandTB303()
 {
-    // RolandTB303 deconstructor
     std::cout << "RolandTB303 being deconstructed.\n";
 }
 
 RolandTB303::SavePattern::SavePattern() : numberOfSteps(24), tempoNumberSelected(12), loopCount(8), exportingToExternalDisk(true), randomisationAmount(8.5f)
 {
-    // Constructor
     std::cout << "SavePattern being constructed!\n";
 }
 
 RolandTB303::SavePattern::~SavePattern()
 {
-    // Deconstructor
     std::cout << "SavePattern being deconstructed!\n";
+}
+
+// New member function
+void RolandTB303::displayVolume()
+{
+    std::cout << "Volume level: " << this->volumeKnob << std::endl;
 }
     
 void RolandTB303::SavePattern::recallPattern(char X)
@@ -460,18 +479,39 @@ struct MidiKeyboard
     void isKeyPressed();
     float padHitAmount(MidiKeyboard padNumber);
     void ledLightDemoMode(std::string onOff);
+
+    // New member functions
+    void listTotalNumKeys();
+    void displayPitchRange();
+    void printPadsTotal();
 };
 
 MidiKeyboard::MidiKeyboard() : numberOfKeys(25), numberOfKnobs(16), numberOfMPCPads(4), pitchControlRange(300000.0), modeSelection('Y')
 {
-    // Constructor
     std::cout << "MidiKeyboard being constructed!\n";  
 }
 
 MidiKeyboard::~MidiKeyboard()
 {
-    // Deconstructor
     std::cout <<"MidiKeyboard being deconstructed!\n";
+}
+
+// New function
+void MidiKeyboard::listTotalNumKeys()
+{
+    std::cout << "List number of keys: " << this->numberOfKeys << std::endl;
+}
+
+// New function
+void MidiKeyboard::displayPitchRange()
+{
+    std::cout << "Available pitch control range: " << this->pitchControlRange << std::endl;
+}
+
+// New function
+void MidiKeyboard::printPadsTotal()
+{
+    std::cout << "Programmable pads: " << this->numberOfMPCPads << std::endl;
 }
     
 void MidiKeyboard::ledLightDemoMode(std::string onOff)
@@ -659,12 +699,17 @@ int main()
     //1
     farmlandrev.displayCurrentTurnover(30, 66, 12.f, 8.f);
     std::cout << "Current wholesale price of wheat per kg: " << farmlandrev.wheatSalePricePerKG << "\n";
+    farmlandrev.printCurrentTurnover();
+    
     //2
     farmlandrev.floodFarmlands(150, 23.f, true);
     std::cout << "Is the farmland in drought? 0 = no, 1 = yes: " << farmlandrev.isInDrought << "\n";
+    farmlandrev.printDroughtStatus();
+    
     //3
     farmlandrev.sellWheat(500, 21.f, 180.f);
     std::cout << "Current number of able workers: " << farmlandrev.numberOfWorkers << "\n";
+    farmlandrev.listTotalNumWorkers();
 
     //4
     farmlandrev.hireNewWorkers(10, 3000); // enter number of workers and income threshold
@@ -676,13 +721,18 @@ int main()
     //1
     midikeyboard.adjustPitch(MidiKeyboard());
     std::cout << "List number of keys: " << midikeyboard.numberOfKeys << "\n";
+    midikeyboard.listTotalNumKeys();
+    
     //2
     midikeyboard.isKeyPressed();
     std::cout << "Available pitch control range: " << midikeyboard.pitchControlRange << "\n";
+    midikeyboard.displayPitchRange();
+    
     //3
     midikeyboard.padHitAmount(MidiKeyboard());
     std::cout << "Programmable pads: " << midikeyboard.numberOfMPCPads << "\n";
-
+    midikeyboard.printPadsTotal();
+    
     //4
     midikeyboard.ledLightDemoMode("on"); // enter "on" for demo
     
@@ -693,7 +743,8 @@ int main()
     //1
     rolandtb303.filterSignal(3500.f);
     std::cout << "Volume level: " << rolandtb303.volumeKnob << "\n";
-
+    rolandtb303.displayVolume();
+    
     //2
     rolandtb303.programSequence(RolandTB303());
     
