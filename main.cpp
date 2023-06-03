@@ -105,12 +105,21 @@ struct Castle
         float displayCurrentTurnover(int totalWorkers, int farmlandArea, float currentMarketPrice, float previousMarketPrice);
         void floodFarmlands(int areaToFlood, float amountOfFlooding, bool isIndrought);
         void hireNewWorkers(int startWorkers, int revenueThreshold);
+
+        // New member function
+        
     };
 
     float reportCollectTaxes(float collectTaxes, FarmlandRevenue farmlandIncome);
     void openCastleGates(int numberOfGatesClosed);
     std::string announceOrders(std::string orders);
     void fireSignalArrow(int startArrows, int targetHits);
+
+    // New member functions
+    void displayNameOfKingAndQueen();
+    void printTotalNumGates();
+    void printTaxCollection();
+    
 };
 
 Castle::Castle() : numberOfGates(8), nameOfKing("Edward"), nameOfQueen("Magda"), amountOfTaxesCollected(300.f), isAtWar(true)
@@ -136,6 +145,25 @@ Castle::FarmlandRevenue::~FarmlandRevenue()
     // FarmlandRevenue deconstructor
     std::cout << "FarmlandRevenue being deconstructed!\n";
 }
+
+// New member function definition
+void Castle::displayNameOfKingAndQueen()
+{
+    std::cout << "names of royalty: " << this->nameOfKing << " & " << this->nameOfQueen << std::endl;
+}
+
+// New member function definition
+void Castle::printTotalNumGates()
+{
+    std::cout << "total gates at castle: " << this->numberOfGates << std::endl;
+}
+
+// New member function definition
+void Castle::printTaxCollection()
+{
+    std::cout << "tax collected: " << this->amountOfTaxesCollected << std::endl;
+}
+
 
 void Castle::FarmlandRevenue::hireNewWorkers(int startWorkers, int revenueThreshold)
 {
@@ -610,15 +638,18 @@ int main()
     //1
     castle.announceOrders("Release the hounds!");
     std::cout << "names of royalty: " << castle.nameOfKing << " & " << castle.nameOfQueen << "\n";
+    castle.displayNameOfKingAndQueen();
 
     //2
     castle.openCastleGates(4);
     std::cout << "total gates at castle: " << castle.numberOfGates << "\n";
-
+    castle.printTotalNumGates();
+    
     //3
     castle.reportCollectTaxes(10.f, Castle::FarmlandRevenue());
     std::cout << "tax collected: " << castle.amountOfTaxesCollected << "\n";
-
+    castle.printTaxCollection();
+    
     //4
     castle.fireSignalArrow(20, 8); // enter how many arrows first, then hit threshold requirement value
         
